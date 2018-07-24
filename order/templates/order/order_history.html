@@ -1,0 +1,29 @@
+{% extends "home/base.html" %}
+{% block style_block %}
+{% endblock %}
+{% block body_block %}
+
+<h1 class="text-center">Order History</h1>
+{% if order %}
+<table class="table table-bordered">
+   <thead>
+     <tr>
+       <th>Order ID</th>
+       <th>Delivery Address</th>
+       <th>Order Cost</th>
+     </tr>
+   </thead>
+   <tbody>
+     {% for item in order %}
+     <tr>
+       <th scope="row">{{ item.order_id }}</th>
+       <td>{{ item.address }}</td>
+       <td> Rs: {{ item.total }}</td>
+     </tr>
+     {% endfor %}
+   </tbody>
+ </table>
+ {% else %}
+ <p class="lead">Order list is empty!</p>
+{% endif %}
+{% endblock %}

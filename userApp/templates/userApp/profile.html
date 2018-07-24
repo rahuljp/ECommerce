@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+{% extends "home/base.html" %}
+{%  load staticfiles %}
+{% block style_block %}
+  <style>
+  footer {
+        background-color: #f2f2f2;
+        padding: 25px;
+      }
+  </style>
+{% endblock %}
+{% block body_block %}
+<div class="container">
+
+  <div class="row">
+    {% if object_list %}
+       {% for acc in object_list %}
+    <div class="col-sm-4">
+
+        <div class="panel-heading"><h3>Username{{ acc.user.username }}<br/></h3><h3>FirstName{{ acc.user.first_name }}<br/></h3><h3>LastName{{ acc.user.last_name }}<br/></h3><h3>Username{{ acc.is_seller }}<br/></h3> <h3>Address {{ acc.address }}</h3></div>
+        {% if acc.image %}
+
+          <div class="panel-body"><a href='{{ acc.get_absolut_url }}'><img src="{{ acc.image.url }}" class="img-responsive" style="width:100%" alt="Image"></a></div>
+        {% endif %}
+
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>Not found: empty</p>
+    {% endif %}
+  </div>
+
+</div>
+{% endblock %}

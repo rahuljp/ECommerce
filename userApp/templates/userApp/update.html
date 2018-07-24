@@ -1,0 +1,41 @@
+{% extends "home/base.html" %}
+{% load staticfiles %}
+
+{% block body_block %}
+  <div class="container">
+    <div class="jumbotron">
+      {% if registered %}
+        <h1>Thanks for updating</h1>
+      {% else %}
+        <h1>For Update</h1>
+        <h3>Just fill out the form.</h3>
+
+        <form enctype="multipart/form-data" method="POST">
+          {% csrf_token %}
+          <div class="form-group">
+    <label for="name">{{user_form.first_name}}</label>
+    <input type="text" class="form-control" id="named" placeholder="instance.user.first_name">
+
+    <label for="name">{{user_form.last_name}}</label>
+    <input type="text" class="form-control" id="named" placeholder="instance.user.last_name">
+
+    <label for="name">{{user_form.first_name}}</label>
+    <input type="text" class="form-control" id="named" placeholder="instance.address">
+
+
+
+
+
+  </div>
+          {{ user_form.as_p }}
+          {{ profile_form.as_p }}
+          <input type="submit" name="" value="Register">
+        </form>
+
+      {% endif %}
+
+    </div>
+
+  </div>
+
+{% endblock %}

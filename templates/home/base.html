@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"> </script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-menu a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-menu a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+</style>
+{% block style_block %}
+
+{% endblock %}
+    <title>GO</title>
+
+  </head>
+  <body>
+
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+      <a class="navbar-brand" href='{% url 'home' %}'>E-Commerce</a>
+        </div>
+        <ul class="nav navbar-nav">
+
+      <li class="dropdown">
+       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Electronics
+       <span class="caret"></span></a>
+       <ul class="dropdown-menu">
+         <li><a href="/search/?q=Smartphone">SmartPhones</a></li>
+         <li><a href="/search/?q=Laptop">Laptops</a></li>
+         <li><a href="/search/?q=TVs">TVs</a></li>
+       </ul>
+     </li>
+
+     <li class="dropdown">
+       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Fashion
+       <span class="caret"></span></a>
+       <ul class="dropdown-menu">
+         <li><a href="/search/?q=Male">Male</a></li>
+         <li><a href="/search/?q=Female">Female</a></li>
+         <li><a href="/search/?q=Kids">Kids</a></li>
+       </ul>
+     </li>
+     <li class="dropdown">
+       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Sports
+       <span class="caret"></span></a>
+       <ul class="dropdown-menu">
+         <li><a href="/search/?q=Cricket">Cricket</a></li>
+         <li><a href="/search/?q=Hockey">Hockey</a></li>
+         <li><a href="/search/?q=Football">Football</a></li>
+       </ul>
+     </li>
+     <li class="dropdown">
+       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Entertainment
+       <span class="caret"></span></a>
+       <ul class="dropdown-menu">
+         <li><a href="/search/?q=Music">Music</a></li>
+         <li><a href="/search/?q=Games">Games</a></li>
+         <li><a href="/search/?q=Books">Books</a></li>
+       </ul>
+     </li>
+    </ul>
+        </ul>
+        <form class="navbar-form navbar-left" action="/search">
+      <div class="form-group">
+        <input type="text" class="form-control" name="q" placeholder="Search">
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+    <ul class="nav navbar-nav navbar-right">
+    {% if user.is_authenticated %}
+    <!--<li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>-->
+    <div class="dropdown">
+    <button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown">
+          <span class="glyphicon glyphicon-user"></span> User
+        </button>
+    <div class="dropdown-menu">
+      <a href="{% url 'userApp:profile' %}">My Profile</a>
+        <a href="{% url 'userApp:update' %}">Update Profile</a>
+      <a href="{% url 'order:orderHistory' %}">Order History</a>
+      <a href="{% url 'logout' %}">Logout</a>
+    </div>
+  </div>
+    {% else %}
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">Sign Up
+      <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li><a href="{% url 'userApp:register' %}">As Customer</a></li>
+        <li><a href="{% url 'seller:register' %}">As Seller</a></li>
+      </ul>
+    </li>
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">Login
+      <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li><a href="{% url 'userApp:user_login' %}?next={{request.build_absolute_uri }}">As Customer</a></li>
+        <li><a href="{% url 'seller:seller_login' %}">As Seller</a></li>
+      </ul>
+    </li>
+    {% endif %}
+  </ul>
+  {% if user.is_authenticated and isSeller %}
+  <ul class="nav navbar-nav">
+    <li class="active"><a href="{% url 'seller:add_pro' %}">Add Products</a></li>
+  </ul>
+  {% endif %}
+    <a href="{% url 'cart:cartHome' %}" class="btn btn-info btn-lg">
+         <span class="glyphicon glyphicon-shopping-cart"></span>Cart</a>
+      </div>
+
+    </nav>
+
+{% block body_block %}
+{% endblock %}
+  </body>
+</html>

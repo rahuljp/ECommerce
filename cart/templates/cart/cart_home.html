@@ -1,0 +1,46 @@
+{% extends "home/base.html" %}
+{% block style_block %}
+<style media="screen">
+.form-actions {
+  margin-left: 70%;
+  margin-right: 5%;
+  margin-top: 3%;
+  text-align: center;
+}
+</style>
+{% endblock %}
+{% block body_block %}
+
+<h1 class="text-center">Cart</h1>
+{% if cart.products.exists %}
+<table class="table table-bordered">
+   <thead>
+     <tr>
+       <th>Item No.</th>
+       <th>Product Name</th>
+       <th>Product Price</th>
+     </tr>
+   </thead>
+   <tbody>
+     {% for product in cart.products.all %}
+     <tr>
+       <th scope="row">{{ forloop.counter }}</th>
+       <td> <a href="{{ product.get_absolute_url }}">{{ product.title }}: {{product.model}}</a>
+          {% include 'categoryApp/update_cart.html' with product=product cart=cart in_cart=True %} </td>
+       <td>{{ product.price }}</td>
+     </tr>
+     {% endfor %}
+     <tr>
+       <td colspan="2"></td>
+       <td> <b>Total</b> {{cart.total}} </td>
+     </tr>
+   </tbody>
+ </table>
+ <div class="form-actions">
+   <a class="btn btn-success btn-block" href="{% url 'order:createOrder' %}"> Check Out </a>
+ </div>
+ {% else %}
+ <p class="lead"> Cart is empty!</p>
+ {% endif %}
+
+{% endblock %}
